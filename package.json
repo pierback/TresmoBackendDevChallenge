@@ -1,0 +1,19 @@
+{
+  "name": "tresmobackenddevchallenge",
+  "version": "1.0.0",
+  "description": "Tresmo Backend Developer Challenge",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pierback/TresmoBackendDevChallenge.git"
+  },
+  "author": "Fabian Pieringer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pierback/TresmoBackendDevChallenge/issues"
+  },
+  "homepage": "https://github.com/pierback/TresmoBackendDevChallenge#readme"
+}
