@@ -4,7 +4,15 @@
   "description": "Tresmo Backend Developer Challenge",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "mongodb": "^2.2.33",
+    "restify": "^6.3.2"
+  },
+  "devDependencies": {
+    "eslint": "^4.11.0"
   },
   "repository": {
     "type": "git",
