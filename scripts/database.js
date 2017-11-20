@@ -1,7 +1,6 @@
 //@ts-check
 /* const mongooseStringQuery = require('mongoose-string-query');
 const timestamps = require('mongoose-timestamp'); */
-const { Logger } = require('./utility');
 module.exports = function (db) {
     const wines = db.createCollection('wines',
         {

@@ -1,6 +1,9 @@
 //@ts-check
 const errors = require('restify-errors');
-const { Logger, NextSequence, PromiseCheck, Validate, CreateWineObject } = require('./utility');
+const { Validate, WineObj, ExtWineObj } = require('./helper');
+
+
+
 module.exports = function (server, wineDB) {
 
 	/**
@@ -8,20 +11,19 @@ module.exports = function (server, wineDB) {
 	 */
     server.post('/wines', (req, res, next) => {
         res.charSet('utf-8');
-
-        console.log('insert ', req.params);
-        const validation = Validate(req.params);
+        const wine = WineObj(req.body);
+        const validation = Validate(req.body);
 
         if (validation.err) {
             res.status(400);
             res.send({
                 error: 'VALIDATION_ERROR',
-                validation: validation
+                validation: validation.data
             });
         }
         else {
-            req.params.year = parseInt(req.params.year);
-            wineDB.insert(req.params)
+            req.body.year = parseInt(req.body.year);
+            wineDB.insert(wine)
                 .then((result) => {
                     if (result.error !== undefined)
                         res.status(500);
@@ -34,7 +36,6 @@ module.exports = function (server, wineDB) {
 
                 });
         }
-
         next();
     });
 
@@ -42,13 +43,10 @@ module.exports = function (server, wineDB) {
 	 * LIST
 	 */
     server.get('/wines', (req, res, next) => {
-
-        const query = CreateWineObject(req.query);
         res.charSet('utf-8');
-
+        const query = WineObj(req.query);
         wineDB.list(query)
             .then((docs) => {
-                console.log('docs', docs);
                 docs.forEach(function (x) {
                     delete x._id;
                 });
@@ -90,21 +88,18 @@ module.exports = function (server, wineDB) {
      * UPDATE
      */
     server.put('/wines/:id', (req, res, next) => {
+        const wine = ExtWineObj(req.params);
         const validation = Validate(req.params);
         res.charSet('utf-8');
-
         if (validation.err) {
             res.status(400);
             res.send({
                 error: 'VALIDATION_ERROR',
-                validation: validation
+                validation: validation.data
             });
         }
         else {
             const id = parseInt(req.params.id);
-            let wine = CreateWineObject(req.params);
-            wine.description = req.params.description === undefined ? '' : req.params.description;
-
             wineDB.update(id, wine)
                 .then((result) => {
                     if (!result) {
@@ -121,10 +116,10 @@ module.exports = function (server, wineDB) {
                     }
                 })
                 .catch(err => {
-                    if (err) {
-                        res.status(500);
-                        res.send({ error: 'INTERNAL_SERVER_ERROR' });
-                    }
+                    res.status(400);
+                    res.send({
+                        error: 'UNKNOWN_OBJECT'
+                    });
                 });
         }
         next();
@@ -138,7 +133,6 @@ module.exports = function (server, wineDB) {
         res.charSet('utf-8');
         wineDB.delete(id)
             .then((result) => {
-                console.log('delete', result);
                 if (result.deletedCount === 1) {
                     res.status(200);
                     res.send({ success: true });

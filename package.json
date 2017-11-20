@@ -5,14 +5,19 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha ./scripts/tests/test.js"
   },
   "dependencies": {
+    "chai-http": "^3.0.0",
     "mongodb": "^2.2.33",
-    "restify": "^6.3.2"
+    "restify": "^6.3.2",
+    "restify-errors": "^5.0.0"
   },
   "devDependencies": {
-    "eslint": "^4.11.0"
+    "chai": "^4.1.2",
+    "eslint": "^4.11.0",
+    "mocha": "^4.0.1",
+    "supertest": "^3.0.0"
   },
   "repository": {
     "type": "git",
