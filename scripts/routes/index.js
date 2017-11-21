@@ -2,13 +2,7 @@
 const errors = require('restify-errors');
 const { Validate, WineObj, ExtWineObj } = require('./helper');
 
-
-
 module.exports = function (server, wineDB) {
-
-	/**
-	 * POST
-	 */
     server.post('/wines', (req, res, next) => {
         res.charSet('utf-8');
         const wine = WineObj(req.body);
@@ -32,16 +26,11 @@ module.exports = function (server, wineDB) {
                         res.send(result);
                     }
                 })
-                .catch(err => {
-
-                });
+                .catch(err => { });
         }
         next();
     });
 
-	/**
-	 * LIST
-	 */
     server.get('/wines', (req, res, next) => {
         res.charSet('utf-8');
         const query = WineObj(req.query);
@@ -53,14 +42,9 @@ module.exports = function (server, wineDB) {
                 res.send(docs);
                 next();
             })
-            .catch(err => {
-
-            });
+            .catch(err => { });
     });
 
-	/**
-	 * GET
-	 */
     server.get('/wines/:id', (req, res, next) => {
         res.charSet('utf-8');
         wineDB.getById({ id: parseInt(req.params.id) })
@@ -84,9 +68,6 @@ module.exports = function (server, wineDB) {
         next();
     });
 
-    /**
-     * UPDATE
-     */
     server.put('/wines/:id', (req, res, next) => {
         const wine = ExtWineObj(req.params);
         const validation = Validate(req.params);
@@ -125,9 +106,6 @@ module.exports = function (server, wineDB) {
         next();
     });
 
-    /**
-     * DELETE
-     */
     server.del('/wines/:id', (req, res, next) => {
         const id = parseInt(req.params.id);
         res.charSet('utf-8');
@@ -150,7 +128,6 @@ module.exports = function (server, wineDB) {
                     });
                 }
             });
-
         next();
     });
 };    

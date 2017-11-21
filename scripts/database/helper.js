@@ -7,5 +7,3 @@ exports.NextID = (dbDump) => {
     }
     return maxId + 1;
 };
-
-exports.IsError = (val) => (val) => val ? true : false;

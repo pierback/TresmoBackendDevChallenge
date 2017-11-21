@@ -2,9 +2,9 @@
   "name": "tresmobackenddevchallenge",
   "version": "1.0.0",
   "description": "Tresmo Backend Developer Challenge",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node main.js",
     "test": "mocha ./scripts/tests/test.js"
   },
   "dependencies": {

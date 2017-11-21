@@ -1,6 +1,6 @@
-process.env.NODE_ENV = 'test';
-require('../../index');
+require('../../main');
 const config = require('../../config');
+config.env = 'test';
 const supertest = require('supertest');
 const server = supertest.agent(config.base_url);
 const chai = require('chai');
@@ -11,12 +11,13 @@ chai.use(chaiHttp);
 let testWine = { name: 'Cabernet sauvignon', year: 2013, country: 'France', type: 'red', description: 'The Sean Connery of red wines' };
 const newWine = { name: 'Glühwein', year: 2017, country: 'Austria', type: 'red', 'description': 'Hofer Premium' };
 
-describe('Wines', () => {
+describe('Wine REST-API', () => {
     before(function (done) {
         setTimeout(function () {
             done();
         }, 1000);
     });
+
     describe('/GET wines', () => {
         it('it should GET all the wines', (done) => {
             server
@@ -122,23 +123,6 @@ describe('Wines', () => {
     });
 
     describe('/PUT/:id wine', () => {
-        /*  describe('/POST wines', () => {
-        it('it should NOT UPDATE a wine given the id', (done) => {
-             let wines = '?name=test&country=manni&year=2002&type=white&description=Ein+guter+Tropfen';
-             let idYo = testWine.id + 1;
-             server
-                 .put('/wines/' + idYo)
-                 .send(newWine)
-                 .end((err, res) => {
-                     console.log(err);
-                     console.log('body', res.body);
-                     //res.should.have.status(400);
-                     //res.body.should.have.property('error').eql('UNKNOWN_OBJECT');
-                     done();
-                 });
-         }); 
-         });*/
-
         describe('UPDATE with given id', () => {
             it('it should UPDATE a wine given the id', (done) => {
                 server

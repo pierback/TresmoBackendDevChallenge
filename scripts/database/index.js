@@ -2,33 +2,25 @@
 const { NextID } = require('./helper');
 let wines;
 
-module.exports = class Wines {
+module.exports = class WineDB {
     constructor(db) {
         wines = db.collection('wines');
     }
     update(id, data) {
         delete data.id;
         return new Promise((resolve, reject) => {
-            wines.findOneAndUpdate(
-                { id: id },
-                { $set: data },
-                { returnOriginal: false },
-                (err, res) => {
-                    /* if (err || !res.updatedExisting) {
-                        console.log('no update');
-                        resolve(false);
-                    } */
-                    delete res.value._id;
-                    resolve(res.value);
-                });
-        });
-    }
-
-    nexId(val) {
-        return new Promise((resolve, reject) => {
-            this.list().then((db) => {
-                resolve(NextID(db));
-            });
+            try {
+                wines.findOneAndUpdate(
+                    { id: id },
+                    { $set: data },
+                    { returnOriginal: false },
+                    (err, res) => {
+                        delete res.value._id;
+                        resolve(res.value);
+                    });
+            } catch (e) {
+                resolve({ error: 'UNKNOWN_OBJECT' });
+            }
         });
     }
 

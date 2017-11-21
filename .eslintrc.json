@@ -8,10 +8,6 @@
     },
     "extends": "eslint:recommended",
     "rules": {
-        /* "indent": [
-            "error",
-            "tab"
-        ], */
         "no-unused-vars": 0,
         "no-undef": 2,
         "no-process-env": "warn",

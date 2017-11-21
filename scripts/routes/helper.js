@@ -23,7 +23,6 @@ const ExtWineObj = (res) => {
 
 const validString = (val, type) => type === typeof val && isNaN(parseInt(val));
 const valType = (key, type, query) => {
-    //@ts-ignore
     if (key === 'type') return config.res_attr.type.includes(query[key]);
     if (key === 'year') return !isNaN(parseInt(query[key]));
     if (typeof query[key] === 'string') return validString(query[key], type);
